@@ -1,0 +1,16 @@
+.env
+node_modules/
+tests/e2e/results/
+tests/e2e/node_modules/
+error_log
+*.log
+
+storage/backups/*
+!storage/backups/.gitkeep
+
+storage/purchase_bills/*
+!storage/purchase_bills/.htaccess
+
+# The licence portal is a separate project; never ship it inside the ERP (it holds the private licence key)
+Central License/
+tests/e2e/live-out/

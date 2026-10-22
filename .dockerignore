@@ -1,0 +1,10 @@
+.env
+.git
+tests
+node_modules
+*.md
+*.txt
+ERP_UPLOAD_ROOT
+storage
+storage/purchase_bills
+Central License

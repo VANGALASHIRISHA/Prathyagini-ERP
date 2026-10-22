@@ -1,0 +1,18 @@
+PRATYANGI BIGROCK ROOT-CAUSE REPORT
+
+CONFIRMED FROM SUPPLIED ZIP:
+- Original master ZIP is 176 MB and contains multiple independent projects, not one web-root package.
+- Core ERP config.php is local-development configuration (127.0.0.1/root/local base URL).
+- PRATYANGI_LIVE/erp has live-style DB settings, but its web entry files remain nested under public/.
+- Original fresh sql/database.sql is missing license_client_state and license_client_log.
+- ERP bootstrap loads license_client.php and enforces license state after bootstrap, so missing license tables can break the app after login/dashboard access.
+- Add-on SQL that creates those tables uses a hard-coded database name, unsuitable for BigRock database prefixes.
+- PHP syntax check passed for all ERP/live PHP files in the supplied package.
+- SHA256 verification in CORE reports 11 mismatched files, meaning the CORE folder changed after its manifest was produced.
+- ERP and central license server RSA public keys match.
+
+PACKAGE FIXES:
+- Added BigRock-compatible ERP root index.php and .htaccess rewrite to public/.
+- Added mandatory license client tables to fresh database.sql.
+- Added BigRock-safe upgrade SQL without hard-coded USE database statement.
+- Preserved current supplied live configuration and license keypair relationship.

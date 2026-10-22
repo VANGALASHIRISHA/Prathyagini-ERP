@@ -1,0 +1,26 @@
+# Render Blueprint for the ERP. Put this repo on GitHub, then Render > New > Blueprint.
+services:
+  - type: web
+    name: pratyangi-erp
+    runtime: docker
+    plan: free          # change to a paid plan for always-on use
+    healthCheckPath: /login.php
+    envVars:
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASS
+        sync: false
+      - key: LICENSE_SERVER_URL
+        sync: false      # URL of your deployed License Control Center, e.g. https://pratyangi-license.onrender.com
+      - key: APP_BASE_URL
+        sync: false
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_LOCAL_LICENSE_BYPASS
+        value: "false"

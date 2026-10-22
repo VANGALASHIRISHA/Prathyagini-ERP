@@ -1,0 +1,61 @@
+PRATYANGI ERP V1.5 — BIGROCK GO-LIVE GUIDE
+
+ROOT CAUSES FIXED IN THIS PACKAGE
+1) Original ZIP root was not a deployable web root; ERP/public was nested and no ERP-root index existed.
+2) Fresh database.sql did NOT include license_client_state / license_client_log tables although app/license_client.php requires them.
+3) Original license patch SQL contained hard-coded: USE pratyangi_fashions; which is wrong for BigRock-prefixed DB names.
+4) ERP root now contains index.php + rewrite .htaccess, so BigRock may point the subdomain document root directly to ERP_UPLOAD_ROOT.
+
+A. BIGROCK PHP
+- Set PHP 8.2 or newer for all PRATYANGI subdomains.
+- Required extensions: pdo_mysql, mbstring, openssl, json, fileinfo, curl.
+- HTTPS/SSL must be active.
+
+B. ERP DATABASE
+FRESH INSTALL:
+- Create/select the ERP database in BigRock/cPanel phpMyAdmin.
+- Import ERP_UPLOAD_ROOT/sql/database.sql.
+- Do NOT import into a different database name.
+
+IF ERP DATABASE ALREADY EXISTS:
+- Select the existing ERP database first.
+- Import ERP_UPLOAD_ROOT/sql/upgrade_v1_5_add_license_client_BIGROCK.sql once if license_client_state table is missing.
+
+C. ERP FILES
+- Upload CONTENTS of ERP_UPLOAD_ROOT to one server folder, e.g. /home/account/pratyangi_erp/
+- Set superadmin.pratyangi.com document root to that SAME folder.
+- Manager/Godown/Cashier subdomains should point to the SAME ERP folder so all panels use the same installation_id/license and same codebase.
+- Do not create four independent copies unless the commercial license allows multiple installations.
+
+D. ERP CONFIG
+- ERP_UPLOAD_ROOT/config.php already contains the current live settings copied from the supplied PRATYANGI_LIVE package.
+- Verify DB host/name/user/password in BigRock before opening the site.
+- Keep license server URL on HTTPS.
+- After successful deployment, rotate database passwords because credentials were present inside the original ZIP supplied for debugging.
+
+E. CENTRAL LICENSE SERVER
+- Upload CONTENTS of LICENSE_SERVER_UPLOAD_ROOT to the document root of centrallicense.pratyangi.com.
+- Create/select the license database and import LICENSE_SERVER_UPLOAD_ROOT/sql/license_server.sql.
+- Verify LICENSE_SERVER_UPLOAD_ROOT/config.php DB settings.
+- ERP public key and License Server public key in this package match.
+- centrallicense.pratyangi.com must be reachable by the ERP server over HTTPS.
+
+F. FIRST OPEN
+1) Open https://centrallicense.pratyangi.com/setup_admin.php and create License Admin if DB is fresh.
+2) Open https://superadmin.pratyangi.com/setup_admin.php and create ERP Super Admin if ERP DB is fresh.
+3) Create a license in License Control Center.
+4) Open ERP license activation page and activate it.
+5) Login and test Super Admin, Manager, Godown, Cashier.
+6) Delete/rename setup_admin.php on both applications after first admin creation.
+
+G. IF A 500 ERROR STILL APPEARS
+- Confirm PHP is 8.2+.
+- Confirm pdo_mysql + openssl + mbstring + fileinfo + curl are enabled.
+- Confirm DB user has privileges on the selected DB.
+- Confirm config.php DB name matches the exact BigRock-prefixed DB name.
+- Confirm license_client_state exists in ERP DB.
+- Confirm centrallicense.pratyangi.com resolves and SSL is valid.
+- Check BigRock error_log; the exact first fatal error is the next diagnostic target.
+
+IMPORTANT
+Do NOT upload the original 176 MB master ZIP directly as the web root. It contains source, desktop build, guides, license add-ons and multiple nested projects. Use the two prepared upload roots only.

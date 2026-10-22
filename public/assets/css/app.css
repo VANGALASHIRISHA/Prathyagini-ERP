@@ -1,0 +1,163 @@
+:root{font-family:Inter,system-ui,Arial,sans-serif;color:#171717;background:#f6f6f6}*{box-sizing:border-box}body{margin:0}header{background:#111;color:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;letter-spacing:.8px}.brand span{opacity:.65}.user a,nav a{color:#fff;text-decoration:none}nav{background:#262626;padding:10px 24px;display:flex;gap:14px;flex-wrap:wrap}nav a{font-size:14px}main{max-width:1240px;margin:24px auto;padding:0 18px}h1{font-size:26px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}.card,.panel{background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}.metric{font-size:30px;font-weight:800}.muted{color:#666;font-size:13px}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;font-size:14px}th{background:#fafafa}.btn{display:inline-block;border:0;border-radius:8px;padding:10px 14px;background:#111;color:#fff;text-decoration:none;cursor:pointer}.btn.secondary{background:#e8e8e8;color:#111}.btn.danger{background:#9b1c1c}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}input,select,textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;background:#fff}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.notice{padding:12px;border-radius:8px;background:#eef6ff;margin:10px 0}.success{background:#eefbed}.error{background:#fff0f0;color:#8a1313}.price-secret{filter:blur(7px);user-select:none}.price-secret.reveal{filter:none}.scanbox{font-size:20px;padding:14px;border:2px solid #111}.qty-good{font-weight:800}.right{text-align:right}.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#eee;font-size:12px}footer{padding:30px;text-align:center;color:#777}@media(max-width:720px){.row,.row3{grid-template-columns:1fr}header{align-items:flex-start;gap:8px;flex-direction:column}}
+.app-shell{display:flex;align-items:stretch;min-height:calc(100vh - 52px)}
+.side{width:248px;flex:none;color:#fff;padding:18px 12px;background:#12315c}
+.side a{display:block;color:#fff;text-decoration:none;padding:9px 12px;border-radius:8px;margin-bottom:3px;font-size:14px}
+.side a.active,.side a:hover{background:rgba(255,255,255,.16)}
+.role-kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.75;margin:0 12px 12px;font-weight:700}
+.app-main{flex:1;min-width:0}
+.app-main main{margin-top:18px}
+.role-manager .side{background:#c45c12}
+.role-godown .side{background:#17693c}
+.role-cashier .side{background:#a61f3d}
+.role-auditor .side{background:#334155}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.tile{display:block;background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:16px;text-decoration:none;color:inherit}
+.tile b{display:block;margin-bottom:4px}
+.bars{display:flex;align-items:flex-end;gap:4px;height:150px;padding-top:8px}
+.bars i{flex:1;display:block;background:#12315c;border-radius:4px 4px 0 0;min-height:2px}
+.bars i span{display:none}
+@media(max-width:860px){.app-shell{display:block}.side{width:auto}}
+.pf-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.pf-searchbar{padding:14px}
+.pf-search{display:flex;gap:10px;align-items:center;position:relative}
+.pf-search .pf-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#666;display:flex;pointer-events:none}
+.pf-search input{flex:1;min-width:0;padding-left:44px}
+.pf-search .btn{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:14px 16px}
+.pf-status{min-height:20px;margin-top:8px;font-size:13px}
+.pf-error{color:#8a1313;font-weight:600}.pf-ok{color:#17693c;font-weight:600}
+.pf-scanner{margin-top:12px}
+.pf-scanner-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.pf-video-wrap{position:relative;background:#000;border-radius:10px;overflow:hidden;max-width:560px;aspect-ratio:4/3;margin-bottom:8px}
+.pf-video-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+.pf-reticle{position:absolute;left:10%;right:10%;top:30%;bottom:30%;border:2px solid rgba(255,255,255,.85);border-radius:8px;box-shadow:0 0 0 999px rgba(0,0,0,.25)}
+.pf-layout{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
+.pf-layout:has(.pf-detail[hidden]){grid-template-columns:1fr}
+.pf-layout:has(.pf-detail[hidden]) .pf-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.pf-results{display:flex;flex-direction:column;gap:10px;transition:opacity .15s}
+.pf-loading .pf-results{opacity:.55}
+.pf-card{display:flex;gap:12px;width:100%;text-align:left;background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:10px;cursor:pointer;font:inherit;color:inherit}
+.pf-card:hover,.pf-card:focus-visible{border-color:#111;outline:none}
+.pf-card.selected{border-color:#111;box-shadow:0 0 0 2px #111 inset}
+.pf-thumb{flex:none;width:64px;height:64px;border-radius:8px;background:#f0f0f0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.pf-thumb img{width:100%;height:100%;object-fit:cover}
+.pf-noimg{font-size:11px;color:#888;text-align:center;padding:4px}
+.pf-card-body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pf-card-title{font-weight:700;overflow:hidden;text-overflow:ellipsis}
+.pf-card-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.pf-badge{display:inline-block;padding:4px 9px;border-radius:99px;font-size:12px;font-weight:700}
+.pf-in{background:#e3f6e8;color:#17693c}.pf-low{background:#fff4d6;color:#8a5a00}.pf-out{background:#fde5e5;color:#9b1c1c}
+.pf-inactive{background:#fde5e5;color:#9b1c1c}
+.pf-empty{background:#fff;border:1px dashed #d6d6d6;border-radius:12px;padding:22px;text-align:center}
+.pf-error-box{border-color:#e9b3b3;background:#fff0f0;color:#8a1313}
+.pf-error-box .btn{margin-top:10px}
+.pf-detail{position:sticky;top:12px}
+.pf-detail h2{margin:0 0 4px;font-size:22px}.pf-detail h3{margin:20px 0 8px;font-size:16px}
+.pf-detail-head{display:flex;gap:16px;align-items:flex-start}
+.pf-detail-title{flex:1;min-width:0}
+.pf-photo{flex:none;width:120px;height:120px;border-radius:10px;background:#f0f0f0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.pf-photo img{width:100%;height:100%;object-fit:cover}
+.pf-close{padding:6px 12px;font-size:18px;line-height:1}
+.pf-prices{display:flex;flex-wrap:wrap;gap:18px;margin-top:10px}
+.pf-prices div{display:flex;flex-direction:column}.pf-prices b{font-size:18px}
+.pf-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0}
+.pf-metrics .card{padding:12px}.pf-metrics .metric{font-size:26px}
+.pf-metric-main{border-color:#111}
+.pf-metric-status{margin-top:8px}
+.pf-attrs{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:0}
+.pf-attrs dt{font-size:12px;color:#666}.pf-attrs dd{margin:2px 0 0;font-weight:600;overflow-wrap:anywhere}
+.pf-table-wrap{overflow-x:auto;border:1px solid #eee;border-radius:10px}
+.pf-table{margin:0}.pf-table code{font-size:12px}
+.pf-hit td{background:#fff7d6}
+.pf-serials{margin-top:16px}.pf-serials summary{cursor:pointer;padding:6px 0}
+.pf-loading-box{padding:30px;text-align:center;color:#666}
+.pf-spinner{display:inline-block;width:18px;height:18px;border:3px solid #ddd;border-top-color:#111;border-radius:50%;vertical-align:middle;margin-right:6px;animation:pfspin .8s linear infinite}
+@keyframes pfspin{to{transform:rotate(360deg)}}
+@media(max-width:980px){.pf-layout{grid-template-columns:1fr}.pf-detail{position:static}}
+@media(max-width:600px){
+.pf-search{flex-wrap:wrap}.pf-search input{flex-basis:100%}.pf-search .btn{width:100%;justify-content:center}.pf-search .pf-icon{top:27px}
+.pf-detail-head{flex-wrap:wrap}.pf-photo{width:88px;height:88px}
+.pf-layout:has(.pf-detail[hidden]) .pf-results{grid-template-columns:1fr}
+.pf-table thead{display:none}.pf-table,.pf-table tbody,.pf-table tr,.pf-table td{display:block;width:100%}
+.pf-table tr{border-bottom:1px solid #eee;padding:6px 0}.pf-table td{border:0;padding:4px 10px;display:flex;justify-content:space-between;gap:10px;text-align:right}
+.pf-table td::before{content:attr(data-label);font-weight:600;color:#666;text-align:left}
+}
+@media print{header,.side,footer,.no-print{display:none!important}.app-shell,.app-main,main{display:block;max-width:none;margin:0}.panel{border:0;box-shadow:none}}
+
+/* Responsive pass: mobile drawer nav + horizontal-scroll tables + small-phone tier.
+   Mobile-first additive rules; nothing here changes desktop (>900px) layout. */
+.brand{display:flex;align-items:center;gap:10px}
+.nav-toggle{display:none;flex:none;width:38px;height:36px;align-items:center;justify-content:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;font-size:18px;line-height:1;cursor:pointer;padding:0}
+.nav-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:45}
+table{max-width:100%}
+img{max-width:100%;height:auto}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+/* wide tables scroll inside the content area instead of widening the whole page */
+.app-shell>main,.app-shell main{min-width:0;overflow-x:auto}
+
+@media screen and (max-width:900px){
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+  table thead,table tbody,table tr{white-space:nowrap}
+  .row,.row3{grid-template-columns:1fr}
+  .pf-table{white-space:normal}
+}
+
+@media screen and (max-width:860px){
+  .nav-toggle{display:inline-flex}
+  .app-shell{display:block}
+  .side{position:fixed;top:0;left:0;width:264px;max-width:82vw;height:100vh;z-index:50;transform:translateX(-100%);transition:transform .22s ease;overflow-y:auto;box-shadow:2px 0 18px rgba(0,0,0,.3)}
+  body.nav-open .side{transform:translateX(0)}
+  body.nav-open .nav-backdrop{display:block}
+  .app-main{margin-top:0}
+}
+
+@media screen and (max-width:480px){
+  main{padding:0 12px;margin:16px auto}
+  h1{font-size:21px}
+  .panel,.card{padding:13px}
+  .row3{grid-template-columns:1fr}
+  th,td{padding:7px;font-size:13px}
+  .btn{padding:9px 12px;font-size:14px}
+  .grid{grid-template-columns:1fr}
+  .tiles{grid-template-columns:1fr}
+}
+
+/* Mid-width screens (laptops with the sidebar open): wide tables scroll inside their own box, not the page. */
+@media screen and (min-width:901px) and (max-width:1280px){
+  .app-main main table{display:block;max-width:100%;overflow-x:auto}
+}
+
+/* ===== Touch-friendly controls (phones, tablets and any touch screen) =====
+   Buttons and fields get at least 44px tap height; fields use 16px text so iPhones do not zoom the page on focus. */
+@media screen and (max-width:900px), (pointer:coarse) {
+  .btn,button,input[type=submit],input[type=button]{min-height:44px;padding:11px 16px;font-size:15px;line-height:1.25;touch-action:manipulation}
+  input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=hidden]),select,textarea{min-height:44px;font-size:16px}
+  textarea{min-height:84px}
+  input[type=file]{font-size:16px;padding:8px}
+  input[type=checkbox],input[type=radio]{width:22px;height:22px;min-height:0;padding:0;margin-right:6px;vertical-align:middle}
+  label{font-size:14px}
+  .side a{padding:13px 14px;font-size:15px;margin-bottom:2px}
+  .nav-toggle{width:44px;height:44px;font-size:20px}
+  .tile{padding:16px;min-height:64px}
+  td .btn,td button,td select,td input:not([type=checkbox]):not([type=radio]):not([type=hidden]){min-height:40px}
+  td .btn,td button{padding:8px 12px}
+  .actions{gap:10px}
+  .actions .btn,.actions button,.actions a.btn{flex:1 1 auto;text-align:center}
+}
+@media screen and (max-width:600px) {
+  /* filter bars and button rows stack cleanly instead of squeezing */
+  .actions>input,.actions>select,.actions>form{flex:1 1 100%;min-width:0}
+  .actions .btn,.actions button,.actions a.btn{flex:1 1 calc(50% - 10px);min-width:130px}
+  form.panel>.btn,form.panel>button.btn{width:100%}
+  .actions form{flex:1 1 100% !important;flex-wrap:wrap;min-width:0}
+  .actions form>input,.actions form>select{flex:1 1 100%;min-width:0}
+  .actions form>.btn,.actions form>button{flex:1 1 auto}
+  .btn.danger,.btn.secondary{white-space:normal}
+  .btn{white-space:normal;overflow-wrap:anywhere}
+  header{padding:10px 14px}
+  .user{font-size:13px}
+}
+@media screen and (max-width:360px) {
+  .actions .btn,.actions button,.actions a.btn{flex:1 1 100%}
+  main{padding:0 10px}
+  .panel,.card{padding:11px}
+}

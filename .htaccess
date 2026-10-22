@@ -1,0 +1,17 @@
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Never expose application/config/database/license internals.
+RewriteRule ^(?:app|sql|license|docs|tests|storage)(?:/|$) - [F,L,NC]
+RewriteRule ^(?:config\.php|config\.example\.php|\.env|VERSION\.txt|SHA256SUMS\.txt)$ - [F,L,NC]
+
+# Existing root files (index.php, .htaccess) are handled normally.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Serve the original public/ directory transparently at the domain root.
+RewriteRule ^(.+)$ public/$1 [L,QSA]
+</IfModule>

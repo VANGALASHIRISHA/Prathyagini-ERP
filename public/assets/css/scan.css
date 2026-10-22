@@ -1,0 +1,60 @@
+/* Camera scanner overlay (camera_scan.js) and Scan & Find page (scan_find.php). Mobile first. */
+.cs-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:12px}
+.cs-overlay[hidden]{display:none}
+.cs-box{background:#fff;border-radius:14px;padding:14px;width:100%;max-width:520px}
+.cs-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.cs-head .btn{width:auto;margin:0;padding:10px 14px}
+.cs-video-wrap{position:relative;background:#000;border-radius:10px;overflow:hidden;aspect-ratio:4/3}
+.cs-video-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+.cs-reticle{position:absolute;inset:22% 10%;border:3px solid rgba(255,255,255,.9);border-radius:10px;box-shadow:0 0 0 999px rgba(0,0,0,.25)}
+.cs-msg{margin-top:10px;min-height:20px}
+.cs-error{color:#8a1313;font-size:14px;font-weight:600}
+.cs-btn{width:auto;margin:0 0 0 8px;padding:10px 12px;vertical-align:middle}
+.cs-inline{display:flex;gap:8px;align-items:stretch}
+.cs-inline>input{flex:1;min-width:0}
+.cs-inline>.cs-btn{margin:0}
+
+.sf-bar form{display:flex;flex-direction:column;gap:10px}
+.sf-bar .scanbox{width:100%;font-size:22px;border-radius:10px}
+.sf-bar .btn{margin:0}
+.sf-actions{display:flex;gap:10px}
+.sf-actions .btn{flex:1}
+.sf-status{margin-top:12px;padding:12px 14px;border-radius:10px;font-weight:700;font-size:16px}
+.sf-status:empty{display:none}
+.sf-status.sf-ok{background:#e6f7e6;color:#14532d;border:1px solid #9bd59b}
+.sf-status.sf-err{background:#fde8e8;color:#8a1313;border:1px solid #f1a5a5}
+.sf-status.sf-busy{background:#f1f1f1;color:#444}
+.sf-result{margin-top:16px;display:flex;flex-direction:column;gap:16px}
+.sf-product{display:flex;gap:14px;align-items:flex-start}
+.sf-photo{width:96px;height:96px;flex:0 0 96px;border-radius:10px;background:#f1f1f1;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.sf-photo img{width:100%;height:100%;object-fit:cover}
+.sf-noimg{font-size:12px;color:#888;text-align:center;padding:4px}
+.sf-product h2{margin:0 0 4px;font-size:20px;line-height:1.25}
+.sf-attrs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.sf-prices{margin-top:8px;font-size:14px}
+.sf-prices b{font-size:18px}
+.sf-where{background:#111;color:#fff;border-radius:12px;padding:16px}
+.sf-where .sf-label{font-size:12px;letter-spacing:.6px;text-transform:uppercase;opacity:.75}
+.sf-where .sf-path{font-size:26px;font-weight:800;line-height:1.25;margin:6px 0;word-break:break-word}
+.sf-where .sf-code{font-family:ui-monospace,Consolas,monospace;font-size:16px;opacity:.9}
+.sf-where .sf-qty{margin-top:8px;font-size:16px}
+.sf-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.sf-list li{border:1px solid #e6e6e6;border-radius:10px;padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.sf-list .sf-loc-path{font-size:18px;font-weight:700;word-break:break-word}
+.sf-list .sf-num{text-align:right;white-space:nowrap}
+.sf-list .sf-num b{font-size:22px;display:block}
+.sf-list a.btn{width:auto;margin:0;padding:10px 14px}
+.sf-section h3{margin:0 0 10px;font-size:17px}
+.sf-hit{outline:3px solid #16a34a}
+.sf-item{display:flex;gap:10px;align-items:center;min-width:0}
+.sf-photo.sf-photo-sm{width:56px;height:56px;flex-basis:56px}
+
+@media (min-width:700px){
+  .sf-bar form{flex-direction:row;flex-wrap:wrap;align-items:stretch}
+  .sf-bar label{flex-basis:100%}
+  .sf-bar .scanbox{flex:1}
+  .sf-actions{flex:0 0 auto}
+  .sf-actions .btn{flex:0 0 auto;width:auto}
+  .sf-photo{width:140px;height:140px;flex-basis:140px}
+  .sf-where .sf-path{font-size:34px}
+}
