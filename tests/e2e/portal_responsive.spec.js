@@ -8,6 +8,7 @@ const WIDTHS = [320, 360, 390, 768, 1024, 1366, 1920];
 const psql = (q) => execSync(`"C:/xampp/mysql/bin/mysql.exe" -uroot -N -B pimfi131_cl -e "${q}"`, { encoding: 'utf8' }).split(String.fromCharCode(13)).join('').trim();
 test('license portal: every page at every width', async ({ browser }) => {
   test.setTimeout(300000);
+  const wasActive = psql("SELECT active FROM admin_users WHERE username='bc_license'") || '0';
   psql("UPDATE admin_users SET active=1 WHERE username='bc_license'; DELETE FROM admin_login_attempts");
   const page = await browser.newPage({ viewport: { width: 1366, height: 800 } });
   const report = {};
@@ -27,7 +28,7 @@ test('license portal: every page at every width', async ({ browser }) => {
       if (probs.length) report[`${p} @${w}`] = probs;
     }
   }
-  psql("UPDATE admin_users SET active=0 WHERE username='bc_license'");
+  psql(`UPDATE admin_users SET active=${wasActive} WHERE username='bc_license'`); // leave it exactly as we found it
   fs.mkdirSync('results', { recursive: true });
   fs.writeFileSync('results/portal_responsive_audit.json', JSON.stringify(report, null, 1));
   const keys = Object.keys(report);

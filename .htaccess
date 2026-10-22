@@ -3,6 +3,11 @@ DirectoryIndex index.php
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
+# Never serve git data, archives, backups or key files
+RewriteRule (^|/)\.git(/|$) - [F,L,NC]
+RewriteRule \.(zip|tar|gz|tgz|7z|rar|bak|old|orig|pem|key)$ - [F,L,NC]
+RewriteRule (^|/)(config\.secret\.php|Central\ License)(/|$) - [F,L,NC]
+
 # Never expose application/config/database/license internals.
 RewriteRule ^(?:app|sql|license|docs|tests|storage)(?:/|$) - [F,L,NC]
 RewriteRule ^(?:config\.php|config\.example\.php|\.env|VERSION\.txt|SHA256SUMS\.txt)$ - [F,L,NC]
