@@ -3,6 +3,9 @@ DirectoryIndex index.php
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
+# Pass the Authorization header to PHP (many shared hosts drop it, which breaks Bearer-key API calls)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 # Never serve git data, archives, backups or key files
 RewriteRule (^|/)\.git(/|$) - [F,L,NC]
 RewriteRule \.(zip|tar|gz|tgz|7z|rar|bak|old|orig|pem|key)$ - [F,L,NC]

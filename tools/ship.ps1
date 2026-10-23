@@ -26,7 +26,7 @@ if (-not (Up 'http://localhost:8000/login.php')) { Write-Host 'ERP is not reacha
 Write-Host '== 2/5 Tests (all suites)' -ForegroundColor Cyan
 Sql 'pimfi131_pratyangiportal' "update users set active=1 where username like 'bc%' and username<>'bc_license'; delete from login_attempts"
 Sql 'pimfi131_cl' "update admin_users set active=1 where username='bc_license'; delete from admin_login_attempts"
-$specs = 'erp','dashboards','auditor','workflow','import_count','extras','qr','purchase_module','barcode_cost','pm_responsive','license','central_link','central_suspend','responsive_audit','portal_responsive' | ForEach-Object { "$_.spec.js" }
+$specs = 'erp','dashboards','auditor','workflow','import_count','extras','qr','purchase_module','order_api','barcode_cost','pm_responsive','license','central_link','central_suspend','responsive_audit','portal_responsive' | ForEach-Object { "$_.spec.js" }
 $code = 1
 try {
   $ErrorActionPreference = 'Continue'   # npx writes warnings to stderr; that is not a failure

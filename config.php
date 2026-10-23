@@ -57,7 +57,7 @@ return [
         // Leave blank to disable server-to-server online order ingest.
         // In production, use a random 40+ character secret.
         // Send it as Authorization: Bearer <key>.
-        'order_ingest_key' => '',
+        'order_ingest_key' => $pick('API_ORDER_INGEST_KEY', ''),
     ],
 
     'app' => [
