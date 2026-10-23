@@ -202,7 +202,7 @@ function pf_product_detail(int $productId, array $vis): ?array {
 
     [$scope, $params] = location_scope_sql('ib.location_id');
     $filter = $vis['sellable_only'] ? '(ib.qty-ib.reserved_qty)>0' : '(ib.qty>0 OR ib.reserved_qty>0)';
-    $st = db()->prepare("SELECT ib.batch_id,ib.location_id,ib.qty,ib.reserved_qty,GREATEST(ib.qty-ib.reserved_qty,0) sellable,b.batch_no,b.batch_barcode,b.purchased_at,l.code location_code,l.name location_name,l.warehouse,l.floor_name,l.section_name,l.rack,l.shelf_bin FROM inventory_balances ib JOIN batches b ON b.id=ib.batch_id JOIN locations l ON l.id=ib.location_id WHERE ib.product_id=? AND $filter" . $scope . ' ORDER BY l.code,b.purchased_at,b.id');
+    $st = db()->prepare("SELECT ib.batch_id,ib.location_id,ib.qty,ib.reserved_qty,GREATEST(ib.qty-ib.reserved_qty,0) sellable,b.batch_no,b.batch_barcode,b.purchased_at,l.code location_code,l.name location_name,l.warehouse,l.floor_name,l.section_name,l.rack,l.shelf,l.shelf_bin FROM inventory_balances ib JOIN batches b ON b.id=ib.batch_id JOIN locations l ON l.id=ib.location_id WHERE ib.product_id=? AND $filter" . $scope . ' ORDER BY l.code,b.purchased_at,b.id');
     $st->execute([$productId, ...$params]);
     $rows = $st->fetchAll();
 
@@ -215,7 +215,7 @@ function pf_product_detail(int $productId, array $vis): ?array {
 
         $lid = (int)$r['location_id'];
         if (!isset($locations[$lid])) {
-            $locations[$lid] = ['code' => $r['location_code'], 'name' => $r['location_name'], 'warehouse' => $r['warehouse'], 'floor' => $r['floor_name'], 'section' => $r['section_name'], 'rack' => $r['rack'], 'bin' => $r['shelf_bin'], 'physical' => 0.0, 'reserved' => 0.0, 'sellable' => 0.0];
+            $locations[$lid] = ['code' => $r['location_code'], 'name' => $r['location_name'], 'warehouse' => $r['warehouse'], 'floor' => $r['floor_name'], 'section' => $r['section_name'], 'rack' => $r['rack'], 'shelf' => $r['shelf'], 'bin' => $r['shelf_bin'], 'physical' => 0.0, 'reserved' => 0.0, 'sellable' => 0.0];
         }
         $locations[$lid]['physical'] += $qty; $locations[$lid]['reserved'] += $res; $locations[$lid]['sellable'] += $sell;
 

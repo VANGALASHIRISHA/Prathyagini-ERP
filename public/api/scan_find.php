@@ -16,13 +16,15 @@ if ($code === '') pf_json(['ok' => false, 'error' => 'Scan or type a code'], 422
 $vis = pf_visibility();
 $canSeeOrders = has_permission('fulfill_online_orders') || has_permission('manage_online_orders');
 
-/** Human readable "Godown > Floor > Section > Rack > Bin" path; falls back to the location name. */
+/** Exact place, labelled: "Godown > Floor > Section > Rack > Shelf > Bin"; falls back to the location name. */
 function sf_location_path(array $l): string {
     $parts = [];
-    foreach (['warehouse', 'floor_name', 'section_name', 'rack', 'shelf_bin'] as $k) {
+    foreach (['warehouse' => '', 'floor_name' => 'Floor ', 'section_name' => 'Section ', 'rack' => 'Rack ', 'shelf' => 'Shelf ', 'shelf_bin' => 'Bin '] as $k => $label) {
         $v = trim((string)($l[$k] ?? ''));
-        if ($v !== '') $parts[] = $v;
+        if ($v !== '') $parts[] = $label . $v;
     }
+    // Staff must never think "the godown" is the exact place when the rack, shelf and bin were never filled in.
+    if (trim((string)($l['rack'] ?? '')) === '' && trim((string)($l['shelf'] ?? '')) === '' && trim((string)($l['shelf_bin'] ?? '')) === '') $parts[] = 'Rack / shelf / bin not assigned';
     return $parts ? implode(' > ', $parts) : (string)$l['name'];
 }
 
@@ -32,7 +34,7 @@ function sf_location_payload(array $l): array {
         'code' => $l['code'],
         'name' => $l['name'],
         'path' => sf_location_path($l),
-        'warehouse' => $l['warehouse'], 'rack' => $l['rack'], 'bin' => $l['shelf_bin'],
+        'warehouse' => $l['warehouse'], 'rack' => $l['rack'], 'shelf' => $l['shelf'] ?? null, 'bin' => $l['shelf_bin'],
     ];
 }
 
@@ -66,11 +68,11 @@ function sf_product_payload(array $p, array $vis): array {
 function sf_product_locations(int $productId, ?int $batchId, array $vis): array {
     [$scopeSql, $scopeParams] = location_scope_sql('ib.location_id');
     $batchSql = $batchId !== null ? ', SUM(CASE WHEN ib.batch_id=? THEN ib.qty-ib.reserved_qty ELSE 0 END) batch_sellable' : '';
-    $sql = 'SELECT l.id,l.code,l.name,l.warehouse,l.floor_name,l.section_name,l.rack,l.shelf_bin,
+    $sql = 'SELECT l.id,l.code,l.name,l.warehouse,l.floor_name,l.section_name,l.rack,l.shelf,l.shelf_bin,
                    SUM(ib.qty) qty, SUM(ib.reserved_qty) reserved_qty' . $batchSql . '
             FROM inventory_balances ib JOIN locations l ON l.id=ib.location_id
             WHERE ib.product_id=?' . $scopeSql . '
-            GROUP BY l.id,l.code,l.name,l.warehouse,l.floor_name,l.section_name,l.rack,l.shelf_bin
+            GROUP BY l.id,l.code,l.name,l.warehouse,l.floor_name,l.section_name,l.rack,l.shelf,l.shelf_bin
             HAVING SUM(ib.qty) > 0 OR SUM(ib.reserved_qty) > 0
             ORDER BY SUM(ib.qty-ib.reserved_qty) DESC, l.code';
     $params = $batchId !== null ? [$batchId, $productId] : [$productId];
@@ -133,7 +135,7 @@ function sf_product_response(int $productId, array $scan, ?int $batchId, array $
 
 // 1) Serial barcode: one exact garment. Its location/status are only revealed inside the user's scope.
 $st = db()->prepare('SELECT ps.product_id,ps.batch_id,ps.location_id,ps.status,b.batch_no,
-                            l.id,l.code,l.name,l.warehouse,l.floor_name,l.section_name,l.rack,l.shelf_bin
+                            l.id,l.code,l.name,l.warehouse,l.floor_name,l.section_name,l.rack,l.shelf,l.shelf_bin
                      FROM product_serials ps
                      JOIN batches b ON b.id=ps.batch_id
                      JOIN locations l ON l.id=ps.location_id
@@ -165,7 +167,7 @@ foreach (['product_barcode' => 'product', 'sku' => 'sku'] as $column => $type) {
 }
 
 // 5) Location (rack/bin) label: everything stored there.
-$st = db()->prepare('SELECT id,code,name,warehouse,floor_name,section_name,rack,shelf_bin,active FROM locations WHERE code=? LIMIT 1');
+$st = db()->prepare('SELECT id,code,name,warehouse,floor_name,section_name,rack,shelf,shelf_bin,active FROM locations WHERE code=? LIMIT 1');
 $st->execute([$code]);
 if ($l = $st->fetch()) {
     if (!can_access_location((int)$l['id'])) {

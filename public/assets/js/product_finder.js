@@ -169,7 +169,7 @@
   }
 
   function locationText(l) {
-    return [l.warehouse, l.floor && `Floor ${l.floor}`, l.section, l.rack && `Rack ${l.rack}`, l.bin && `Bin ${l.bin}`].filter(Boolean).map(esc).join(' · ');
+    return [l.warehouse, l.floor && `Floor ${l.floor}`, l.section, l.rack && `Rack ${l.rack}`, l.shelf && `Shelf ${l.shelf}`, l.bin && `Bin ${l.bin}`].filter(Boolean).map(esc).join(' · ');
   }
 
   function renderDetail(d, scan) {
