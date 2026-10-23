@@ -58,6 +58,8 @@ return [
         // In production, use a random 40+ character secret.
         // Send it as Authorization: Bearer <key>.
         'order_ingest_key' => $pick('API_ORDER_INGEST_KEY', ''),
+        // Read-only catalogue endpoints for the online store. Must be a DIFFERENT 32+ character key; there is no fallback to the order key.
+        'catalogue_key' => $pick('API_CATALOGUE_KEY', ''),
     ],
 
     'app' => [
